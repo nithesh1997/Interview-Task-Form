@@ -2,9 +2,54 @@ import './Form.css';
 import { studentName, birthDate,address,commonInput } from '../../Redux-toolkit/FormSlice';  
 import {connect} from 'react-redux'
 import {useHistory} from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 
 function Form(props) {
+
+  const [monthState,setMonthState] = useState(["January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"])
+  const [dayState,setDayState] = useState([])
+  const [yearState,setYearState] = useState([])
+
+
+
+  useEffect(()=>{
+
+    let i = 1;
+
+    let arry = []
+
+    while(i<=30){
+     arry.push(i)
+      i++;
+    }
+    setDayState(arry);
+
+    let Y = 1995;
+    let arryYear = []
+    while(Y<=2024){
+      arryYear.unshift(Y)
+       Y++;
+     }
+     setYearState(arryYear);
+
+
+
+  },[])
+
+  console.log(dayState)
+
  
   const history = useHistory();
 
@@ -55,7 +100,7 @@ function handleSubmit(event){
 }
   return (
     <div className="App">
-      <div class="container" >
+      <div class="containerMain">
         <form onSubmit={handleSubmit}  className='form'>
             <div class="row">
                 <div class="col">
@@ -95,27 +140,29 @@ function handleSubmit(event){
     <div class="col">
     <select class="form-select" value={BirthDate.month} onChange={(e)=>birthDateFun({id:e.target.id,value:e.target.value})} id='month' aria-label="Default select example">
   <option selected>Please Select</option>
-  <option value="January">January</option>
-  <option value="Febuary">Febuary</option>
-  <option value="March">March</option>
+  {monthState.map(e=>(
+  <option value={e}>{e}</option>
+  ))}
+  
 </select>
   <div class="form-text form-text1">Month</div>
     </div>
     <div class="col">
     <select class="form-select" value={BirthDate.day} onChange={(e)=>birthDateFun({id:e.target.id,value:e.target.value})} id='day' aria-label="Default select example">
     <option selected>Please Select</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+    {dayState.map(e=>(
+  <option value={e}>{e}</option>
+    ))}
 </select>
 <div id="emailHelp" class="form-text form-text1">Date</div>
     </div>
     <div class="col">
     <select class="form-select" value={BirthDate.year} onChange={(e)=>birthDateFun({id:e.target.id,value:e.target.value})} id='year' aria-label="Default select example">
   <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+  {yearState.map(e=>(
+  <option value={e}>{e}</option>
+  ))}
+ 
 </select>
 <div id="emailHelp" class="form-text form-text1">Year</div>
     </div>
@@ -232,8 +279,9 @@ function handleSubmit(event){
               
 
             </div>
-          
+          <div style={{padding:"20px 0px 10px 10px"}}>
             <button >Submit</button>
+            </div>
         </form>
     </div>
     </div>

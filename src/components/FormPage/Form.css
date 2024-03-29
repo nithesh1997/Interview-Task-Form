@@ -11,9 +11,11 @@
 }
 
 
-.container{
+.containerMain{
     display: flex;
     justify-content: center;
+    background-color:#f3f3fe !important;
+    max-width: -webkit-fill-available;
    
     /* margin:25px;
     padding:25px; */
